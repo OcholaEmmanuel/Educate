@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Academy - Certified Programs & Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="closeCourseHub()">
+                <div class="bg-amber-500 p-2 rounded-lg text-slate-900">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">World Academy</h1>
+                    <p class="text-xs text-amber-400 font-medium">Professional Certification & Learning Portal</p>
+                </div>
+            </div>
+
+            <div id="headerSearchContainer" class="hidden md:flex items-center bg-slate-800 rounded-lg px-3 py-1.5 w-80 border border-slate-700 focus-within:border-amber-500">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2"></i>
+                <input type="text" id="searchInput" onkeyup="filterCourses()" placeholder="Search program, code or keyword..." class="bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none w-full">
+            </div>
+
+            <div class="flex items-center space-x-4 text-xs sm:text-sm">
+                <a href="tel:+447405571267" class="hidden lg:flex items-center text-slate-300 hover:text-white">
+                    <i data-lucide="phone" class="w-4 h-4 mr-1 text-amber-400"></i> +254 706287933
+                </a>
+                <a href="mailto:info@worldacademy.uk" class="hidden sm:flex items-center text-slate-300 hover:text-white">
+                    <i data-lucide="mail" class="w-4 h-4 mr-1 text-amber-400"></i> info@worldacademy.uk
+                </a>
+                <button onclick="window.open('https://www.worldacademy.uk', '_blank')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-3 py-1.5 rounded-md font-semibold text-xs flex items-center">
+                    Official Site <i data-lucide="external-link" class="w-3.5 h-3.5 ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="catalogView" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-10 text-white mb-8 shadow-xl relative overflow-hidden">
+            <div class="relative z-10 max-w-3xl">
+                <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-semibold mb-3 border border-amber-500/30">
+                    CPD Accredited • UKRLP Registered
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold mb-3 leading-tight">
+                    Professional Certification Programs & Executive Masterclasses
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base mb-6">
+                    Explore recognized certifications, executive diplomas, and specialized webinars. Click on any program to enter its full interactive Learning Platform containing notes, books, frameworks, and self-assessments.
+                </p>
+                <div class="flex flex-wrap gap-4 text-xs sm:text-sm text-slate-300">
+                    <div class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Live Zoom Sessions</div>
+                    <div class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Self-Paced Learning</div>
+                    <div class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Flexible Payment Plans</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden mb-6">
+            <div class="flex items-center bg-white rounded-lg px-3 py-2 border border-slate-200 shadow-sm">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2"></i>
+                <input type="text" id="mobileSearchInput" onkeyup="filterCoursesMobile()" placeholder="Search programs..." class="bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none w-full">
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-6 no-scrollbar text-sm font-medium">
+            <button onclick="setCategory('all')" id="btn-all" class="cat-btn bg-slate-900 text-white px-4 py-2 rounded-lg whitespace-nowrap shadow-sm">All Programs (19)</button>
+            <button onclick="setCategory('hr')" id="btn-hr" class="cat-btn bg-white text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-lg whitespace-nowrap border border-slate-200">HR & Training</button>
+            <button onclick="setCategory('finance')" id="btn-finance" class="cat-btn bg-white text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-lg whitespace-nowrap border border-slate-200">Finance & Risk</button>
+            <button onclick="setCategory('project')" id="btn-project" class="cat-btn bg-white text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-lg whitespace-nowrap border border-slate-200">Project & Admin</button>
+            <button onclick="setCategory('it')" id="btn-it" class="cat-btn bg-white text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-lg whitespace-nowrap border border-slate-200">IT & Governance</button>
+            <button onclick="setCategory('webinar')" id="btn-webinar" class="cat-btn bg-white text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-lg whitespace-nowrap border border-slate-200">Webinars</button>
+        </div>
+
+        <div id="courseGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+        <div id="noResults" class="hidden text-center py-16 bg-white rounded-xl border border-slate-200 shadow-sm mt-4">
+            <i data-lucide="folder-search" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
+            <h3 class="text-lg font-bold text-slate-800 mb-1">No matching programs found</h3>
+            <p class="text-slate-500 text-sm">Try adjusting your search criteria or resetting the category filter.</p>
+        </div>
+    </main>
+
+    <div id="courseHubView" class="hidden flex-grow bg-slate-100 min-h-screen">
+        <div class="bg-slate-900 text-white border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+                <button onclick="closeCourseHub()" class="flex items-center text-sm font-semibold text-slate-300 hover:text-white bg-slate-800 px-3 py-1.5 rounded-md border border-slate-700">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-1.5"></i> Back to All Programs
+                </button>
+
+                <div class="flex items-center space-x-3 text-xs">
+                    <span id="hubCategoryBadge" class="bg-indigo-500/20 text-indigo-300 px-2.5 py-1 rounded-full border border-indigo-500/30 font-semibold"></span>
+                    <span id="hubCodeBadge" class="bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-full border border-amber-500/30 font-mono font-bold"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 text-white pb-8 pt-2 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="max-w-3xl">
+                        <h2 id="hubTitle" class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug"></h2>
+                        <p id="hubSubtitle" class="text-slate-300 text-sm sm:text-base mb-4"></p>
+                        
+                        <div class="flex flex-wrap gap-4 text-xs text-slate-300">
+                            <span class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1 text-amber-400"></i> <strong id="hubSchedule" class="text-white ml-1"></strong></span>
+                            <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1 text-amber-400"></i> <strong id="hubDuration" class="text-white ml-1"></strong></span>
+                            <span class="flex items-center"><i data-lucide="video" class="w-4 h-4 mr-1 text-amber-400"></i> Delivery: <strong id="hubDelivery" class="text-white ml-1"></strong></span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex flex-col justify-between min-w-[220px]">
+                        <div>
+                            <span class="text-xs text-slate-400 block mb-1">Accreditation & Provider</span>
+                            <span id="hubAccreditation" class="text-xs font-semibold text-amber-400 block mb-3"></span>
+                        </div>
+                        <button onclick="alert('Registration request initiated! Contact info@worldacademy.uk or +44 7405 571267 for enrollment details.')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg flex items-center justify-center">
+                            <i data-lucide="user-check" class="w-4 h-4 mr-1.5"></i> Enroll / Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex overflow-x-auto space-x-8 text-sm font-semibold no-scrollbar">
+                    <button onclick="switchHubTab('overview')" id="tabBtn-overview" class="hub-tab-btn py-3.5 border-b-2 border-indigo-600 text-indigo-600 whitespace-nowrap flex items-center">
+                        <i data-lucide="info" class="w-4 h-4 mr-2"></i> Program Overview
+                    </button>
+                    <button onclick="switchHubTab('notes')" id="tabBtn-notes" class="hub-tab-btn py-3.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap flex items-center">
+                        <i data-lucide="book-open" class="w-4 h-4 mr-2"></i> Notes & Syllabus
+                    </button>
+                    <button onclick="switchHubTab('books')" id="tabBtn-books" class="hub-tab-btn py-3.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap flex items-center">
+                        <i data-lucide="library" class="w-4 h-4 mr-2"></i> Books & Literature
+                    </button>
+                    <button onclick="switchHubTab('references')" id="tabBtn-references" class="hub-tab-btn py-3.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap flex items-center">
+                        <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> References & Standards
+                    </button>
+                    <button onclick="switchHubTab('quiz')" id="tabBtn-quiz" class="hub-tab-btn py-3.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap flex items-center">
+                        <i data-lucide="help-circle" class="w-4 h-4 mr-2"></i> Self-Assessment
+                    </button>
+                    <button onclick="switchHubTab('mynotes')" id="tabBtn-mynotes" class="hub-tab-btn py-3.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap flex items-center">
+                        <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i> My Personal Notes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <div id="hubContent-overview" class="hub-content space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
+                                <i data-lucide="target" class="w-5 h-5 text-indigo-600 mr-2"></i> Key Objectives & Learning Outcomes
+                            </h3>
+                            <ul id="hubObjectives" class="space-y-2 text-slate-600 text-sm list-disc pl-5"></ul>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
+                                <i data-lucide="user-check" class="w-5 h-5 text-indigo-600 mr-2"></i> Target Audience & Prerequisites
+                            </h3>
+                            <p id="hubAudience" class="text-slate-600 text-sm leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 class="text-base font-bold text-slate-900 mb-3 border-b pb-2">Program Quick Specs</h4>
+                            <div class="space-y-3 text-xs sm:text-sm">
+                                <div>
+                                    <span class="text-slate-400 block">Accrediting Bodies</span>
+                                    <span class="font-semibold text-slate-800">CPD Standards Office (UK), UKRLP, Cambridge Academy of Professionals</span>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">Format</span>
+                                    <span class="font-semibold text-slate-800">Live Zoom Classes / Self-Paced Learning</span>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">Assessment</span>
+                                    <span class="font-semibold text-slate-800">Case Study Assignments & Multiple Choice Exam</span>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">Payment Options</span>
+                                    <span class="font-semibold text-slate-800">Installment Plan Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hubContent-notes" class="hub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4 border-b pb-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i data-lucide="book-open" class="w-5 h-5 text-indigo-600 mr-2"></i> Comprehensive Course Syllabus & Lecture Notes
+                        </h3>
+                        <button onclick="window.print()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg flex items-center">
+                            <i data-lucide="printer" class="w-3.5 h-3.5 mr-1"></i> Print / Export Notes
+                        </button>
+                    </div>
+                    <div id="hubSyllabusContainer" class="space-y-4"></div>
+                </div>
+            </div>
+
+            <div id="hubContent-books" class="hub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 border-b pb-3 flex items-center">
+                        <i data-lucide="library" class="w-5 h-5 text-indigo-600 mr-2"></i> Recommended Books & Essential Reading
+                    </h3>
+                    <div id="hubBooksContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+
+            <div id="hubContent-references" class="hub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 border-b pb-3 flex items-center">
+                        <i data-lucide="file-text" class="w-5 h-5 text-indigo-600 mr-2"></i> Industry Frameworks & Regulatory Guidelines
+                    </h3>
+                    <div id="hubReferencesContainer" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <div id="hubContent-quiz" class="hub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4 border-b pb-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-indigo-600 mr-2"></i> Program Knowledge Check
+                            </h3>
+                            <p class="text-xs text-slate-500">Test your understanding of key concepts covered in this program.</p>
+                        </div>
+                        <span id="quizScoreBadge" class="hidden text-xs font-bold px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full"></span>
+                    </div>
+
+                    <div id="quizContainer" class="space-y-6"></div>
+
+                    <div id="quizSubmitBar" class="mt-6 pt-4 border-t flex justify-end">
+                        <button onclick="gradeQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-5 py-2.5 rounded-lg flex items-center">
+                            <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i> Submit Answers
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hubContent-mynotes" class="hub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i data-lucide="edit-3" class="w-5 h-5 text-indigo-600 mr-2"></i> Student Study Notepad
+                        </h3>
+                        <span id="saveStatus" class="text-xs text-slate-400 italic">Auto-saves to local storage</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4">Write your own personal notes, key takeaways, or lecture highlights for this course here.</p>
+                    <textarea id="userNotesTextArea" oninput="saveUserNotes()" rows="12" placeholder="Type your personal notes here..." class="w-full p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm text-slate-800 font-mono leading-relaxed bg-slate-50"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-semibold text-slate-200 mb-1">World Academy UK • Learning Management & Course Hub</p>
+                <p>Accredited by CPD Standards Office & Registered with UK Register of Learning Providers (UKRLP).</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span>WhatsApp: +254 706287933</span>
+                <span>•</span>
+                <span>info@worldacademy.uk</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

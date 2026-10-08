@@ -1,0 +1,17 @@
+/* Custom Scrollbar for filter tabs & code blocks */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Custom transitions and interactive states */
+.hub-tab-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.cat-btn {
+    transition: all 0.2s ease;
+}
